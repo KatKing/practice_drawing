@@ -1,6 +1,11 @@
 
 
 var color = $(".selected").css("background-color");
+var  $canvas = $("canvas"); 
+
+var ctx = $canvas[0].getContext("2d");
+var lastEvent;
+var mousedown = false;
 //when clicking on control list items
 
 $(".controls").on("click", "li", function(){
@@ -41,16 +46,30 @@ $(".controls").on("click", "li", function(){
 
 	});
 
+		$canvas.mousedown(function(e){
+				lastEvent = e;
+				mousedown = true;
+		}).mousemove(function(e){
+			if(mousedown){
+		ctx.beginPath();
+		ctx.moveTo(lastEvent.offsetX, lastEvent.offsetY);
+		ctx.lineTo(e.offsetX, e.offsetY);
+		ctx.strokeStyle = color;
+		ctx.stroke();
+		lastEvent = e;
+				}
+
+		}).mouseup(function(){
+			mousedown = false;
+		}).mouseleave(function(){
+			$canvas.mouseup();
+		});
+
+		
+
+
+		
 
 
 
 
-
-//Once color span is changed, append it to the color palette. 
-
-	//Then Select the New color
-
-
-// On mouse events on the canvas
-
-	//Draw lines
